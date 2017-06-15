@@ -1,0 +1,11 @@
+{
+  "name": "smart-panda",
+  "version": "1.0.0",
+  "description": "Panda POST counter",
+  "main": "smart-panda.js",
+  "dependencies": {
+    "httpdispatcher": "^1.0.0",
+    "http": "~0.0.0",
+    "pm2": "~2.5.0"
+  }
+}

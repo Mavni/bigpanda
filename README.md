@@ -26,7 +26,7 @@ Below, you can find the description of your tasks.
 Create two basic NodeJs or Python services, the first is img-panda which should serve static files from a directory called `resources`. The directory should contain a random number of files. You may use any image that you like, as long as there is a panda over there. The service should return a *random* image on every GET request. 
 
 The second service shall be called smart-panda, and should just maintain a counter of the amount of POST requests it served, and return it on every GET request it gets.
-A sample NodeJS service named bamboo-app already exists  [here](roles/bamboo/files/bamboo-app)
+A sample NodeJS service named bamboo-app already exists  [here](src/roles/bamboo/files/bamboo-app)
 
 ###### Deployment
 Create an ansible role for each of the services. The role should install the service, **run it** and make sure it's ready to be used in **production** (see [General Guidelines](#general-guidelines)). 
