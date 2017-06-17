@@ -1,4 +1,5 @@
 ---
+
 - name: Common tasks FTW
   hosts: all
   become: yes
@@ -6,12 +7,10 @@
     - name: Set hostname
       hostname: name={{inventory_hostname}}
 
-- name: Image Panda service
+- name: Panda service
   hosts: base
   become: yes
   roles:
-    - { role: nodejs, tags: nodejs } #remove
-    - { role: img-panda, tags: img-panda}
-    - { role: smart-panda, tags: smart-panda}
-
-
+    - { role: img-panda }
+#      tags: img-panda
+    #- { role: smart-panda, tags: smart-panda}

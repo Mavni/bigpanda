@@ -4,30 +4,24 @@ var HttpDispatcher = require('httpdispatcher');
 var dispatcher = new HttpDispatcher();
 var fs = require('fs');
 
+var files = fs.readdirSync(config.path);
 
-getFile();
-
-function getFile(err, rfile){
-    if (err) {
-        console.log(err);
-        return;
+function handleRequest(request, response){
+    try {
+        console.log("Requested URL: " + request.url);
+        dispatcher.dispatch(request, response);
     }
-
-    var files = [fs.readdir(config.path, function (err) {
-        if (err) {
-            console.log(err);
-        }
-    })];
-
-    rfile = files[Math.floor(Math.random() * files.length)];
-        console.log(rfile);
-    return rfile;
+    catch(err) {
+        console.log(err);
+    }
 }
 
 dispatcher.onGet("/", function (req, res, data) {
 
-    res.writeHead(200, {'Content-Type': 'image/jpeg'});
-    fs.readFile(rfile, function (err,data) {
+    var rfile = files[Math.floor(Math.random() * files.length)];
+    rfile = config.path + rfile;
+    fs.readFile(rfile, function (err, data) {
+        res.writeHead(200, {'Content-Type': 'image/jpeg'});
         res.end(data);
     })
 });
@@ -41,5 +35,3 @@ dispatcher.onError(function (req, res) {
 http.createServer(handleRequest).listen(config.port, function () {
     console.log("Server listening on: http://localhost:%s", config.port)
 });
-
-
