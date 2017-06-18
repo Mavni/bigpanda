@@ -1,0 +1,37 @@
+---
+# tasks file for img-panda
+
+- name: Create a folder for the service
+  become: True
+  file: path=/home/vagrant/img-panda/resources state=directory
+
+- name: Copying img-panda app files to the folder
+  become: True
+  copy: 
+      src: src/img-panda
+      dest: /home/vagrant/
+
+- name: Install required NPM modules
+  become: True
+  shell: /usr/bin/npm install .
+  args:
+    chdir: /home/vagrant/img-panda
+
+- name: Setup pm2
+  become: True
+  command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup upstart -u vagrant --hp /home/vagrant
+  args:
+    chdir: /home/vagrant/img-panda
+
+- name: Daemonize the service with pm2 for complete pwnage
+  become: False
+  command: "{{ item }}"
+  args:
+    chdir: /home/vagrant/img-panda
+  with_items:      
+      - pm2 start img-panda.js --watch -s
+      - pm2 save
+      - pm2 status
+
+- name: img-panda is now available on http://localhost:1337
+  command: echo img-panda is now available on http://localhost:1337

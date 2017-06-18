@@ -1,0 +1,6 @@
+
+- name: Install PM2
+  become: True
+  npm:
+      name: pm2
+      global: yes

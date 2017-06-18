@@ -1,0 +1,36 @@
+---
+# tasks file for smart-panda
+
+- name: Create a folder for the service
+  become: True
+  file: path=/home/vagrant/smart-panda/resources state=directory
+
+- name: Copying smart-panda app files to the folder
+  become: True
+  copy: 
+      src: src/smart-panda
+      dest: /home/vagrant/
+
+- name: Install required NPM modules
+  become: True
+  shell: /usr/bin/npm install .
+  args:
+    chdir: /home/vagrant/smart-panda
+
+- name: Setting up pm2
+  become: True
+  command: env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup upstart -u vagrant --hp /home/vagrant
+  args:
+    chdir: /home/vagrant/smart-panda
+
+- name: Daemonize the service with pm2 for complete pwnage
+  become: False
+  command: "{{ item }}"
+  args:
+    chdir: /home/vagrant/smart-panda
+  with_items:      
+      - pm2 start smart-panda.js --watch -s
+      - pm2 save
+
+- name: smart-panda is now available on http://localhost:13372
+  command: echo smart-panda is now available on http://localhost:13372
