@@ -11,6 +11,5 @@
   hosts: base
   become: yes
   roles:
-    - { role: img-panda }
-#      tags: img-panda
-    #- { role: smart-panda, tags: smart-panda}
+    - { role: img-panda,  tags: img-panda }
+    - { role: smart-panda, tags: smart-panda}

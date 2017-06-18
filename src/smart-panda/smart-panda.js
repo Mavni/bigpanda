@@ -4,10 +4,10 @@ var HttpDispatcher = require('httpdispatcher');
 var dispatcher = new HttpDispatcher();
 var fs = require('fs');
 
-// A counter with an attitude
+//i countz them panda posts
 var counter = 0;
 
-// I handle requests, hence handleRequest
+//i handle requests, hence handleRequest
 function handleRequest(request, response){
     try {
         console.log("Requested URL: " + request.url);
@@ -42,7 +42,7 @@ dispatcher.onError(function(req, res) {
     res.end("404 - This is a NO PANDA zone, you might want to stick to '/'\n");
 
 });
-
+//start the fun!
 http.createServer(handleRequest).listen(config.port, function(){
     console.log("Server listening on: http://localhost:%s", config.port);
 });
